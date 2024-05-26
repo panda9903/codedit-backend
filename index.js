@@ -41,7 +41,7 @@ io.on("connection", (socket) => {
 
   socket.on("code-change", ({ roomId, code }) => {
     console.log("code-change", roomId, code);
-    socket.broadcast.in(roomId).emit("code-change", code);
+    socket.broadcast.to(roomId).emit("code-change", code, (setValue = true));
   });
 
   socket.on("sync-code", ({ socketId, code }) => {
