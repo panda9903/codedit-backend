@@ -67,6 +67,7 @@ app.post("/submit", async (req, res) => {
   let statusOfCode = "";
   let outputofCode = "";
   let stderr = "";
+  let compileError = "";
 
   const options = {
     method: "POST",
@@ -101,7 +102,8 @@ app.post("/submit", async (req, res) => {
 
     statusOfCode = response.data.status.description.toString();
     outputofCode = atob(response.data.stdout).toString();
-    stderr = atob(response.data.stderr).toString();
+    stderr = atob(response.data.stderr) || "".toString();
+    compileError = atob(response.data.compile_output) || "".toString();
 
     if (statusOfCode !== "Accepted") {
       outputofCode = "";
@@ -113,7 +115,7 @@ app.post("/submit", async (req, res) => {
     console.error(error);
   }
 
-  res.json({ statusOfCode, outputofCode, stderr });
+  res.json({ statusOfCode, outputofCode, stderr, compileError });
 });
 
 io.on("connection", (socket) => {
