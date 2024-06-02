@@ -2,6 +2,7 @@ const express = require("express");
 const axios = require("axios");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+require("dotenv").config();
 
 const app = express();
 app.use(cors());
@@ -12,7 +13,7 @@ const { Server } = require("socket.io");
 
 const PORT = process.env.PORT || 5000;
 const io = new Server(server);
-
+console.log("Jdge 0", process.env.JUDGE0_API_KEY);
 const userSocketMap = {};
 
 const getAllClients = (roomId) => {
@@ -78,7 +79,7 @@ app.post("/submit", async (req, res) => {
     headers: {
       "content-type": "application/json",
       "Content-Type": "application/json",
-      "X-RapidAPI-Key": "4b159e6853msh9954a7eba6073b4p1f88b4jsn40d55cd0c6e5",
+      "X-RapidAPI-Key": process.env.JUDGE0_API_KEY,
       "X-RapidAPI-Host": "judge0-ce.p.rapidapi.com",
     },
     data: {
