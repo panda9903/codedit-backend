@@ -137,6 +137,11 @@ io.on("connection", (socket) => {
     });
   });
 
+  socket.on("change-language", ({ roomId, language }) => {
+    console.log("change-language", roomId, language);
+    socket.broadcast.to(roomId).emit("change-language", { language });
+  });
+
   socket.on("code-change", ({ roomId, code }) => {
     //console.log("code-change", roomId, code);
     socket.broadcast.to(roomId).emit("code-change", code, (setValue = true));
